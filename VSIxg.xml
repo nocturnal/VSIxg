@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<Profile FormatVersion="1">
+  <Tools>
+    <!-- Build system to augment (will hook parallel processes using -j) -->
+    <Tool Filename="snmake"       AllowIntercept="true" />
+    
+    <!-- Sony Compilers, run remotely -->
+    <Tool Filename="spa"          AllowRemote="true"  DeriveCaptionFrom="lastparam"/>
+    <Tool Filename="ppu-lv2-gcc"  AllowRemote="true"  DeriveCaptionFrom="lastparam"/>
+    <Tool Filename="spu-lv2-gcc"  AllowRemote="true"  DeriveCaptionFrom="lastparam"/>
+
+    <!-- Sony Linkers, run locally -->
+    <Tool Filename="ppu-lv2-ld"   AllowRemote="false" DeriveCaptionFrom="lastparam"/>
+    <Tool Filename="spu-lv2-ld"   AllowRemote="false" DeriveCaptionFrom="lastparam"/>
+  </Tools>
+</Profile>

@@ -1,0 +1,55 @@
+vsixg - Insomniac Games
+
+==================
+What does this do?
+==================
+
+vsixg is a go-between for SN Systems' ProDG-VSI and Xoreax Software's Incredibuild.
+It enables VSI builds to use the Incredibuild Grid Engine for parallel compilation.
+
+==============================
+How do I install/uninstall it?
+==============================
+
+To install, run vsixg_install.pl
+
+To uninstall, run vsixg_remove.pl
+
+Neither scripts take any parameters, and will not mess around with any files that
+it does not recognize.  Future versions of vsixg or ProDG will necessitate the
+updating of these scripts.
+
+ITS ADVISED THAT YOU REMOVE VSIXG BEFORE UPGRADING OR RE-INSTALLING PRODG-VSI.
+I doubt that anything bad would happen, but its not something that has been
+well tested.
+
+=================
+How does it work?
+=================
+
+It uses the same sneaky technique that ProDG-VSI uses.  It replaces vsimake.exe
+with another tool (vsixg.exe), and moves vsimake.exe to snmake.exe.  vsixg.exe
+tells the Xoreax Grid Engine to run snmake.exe in an augmented mode.  This
+augmented mode hooks parallel compile process creation and farms those
+processes out to the grid.  It only hooks if the -j flag of make is set.
+
+Only certain compile tools are run remotely (on the grid).  These processes are
+specified in the vsixg.xml file in the bin folder (after installation).
+
+==========================
+How do I get good results?
+==========================
+
+The first thing to know is that you SHOULDN'T USE THE INCREDIBUILD TOOLBAR TO BUILD
+VSI SOLUTION FILES.  The actual Incredibuild build system doesn't know how to handle
+the VSI vcproj and sln files.  You should continue to use the ProDG VSI toolbar to
+invoke builds of your project/solution.
+
+The next thing you should know is how to set the -j parameter from within the ProDG
+VSI properites.  This parameter gates the number of parallel builds to allow to run
+simultaneously.  Since ProDG uses the grid to do heavy lifting (as opposed to the 4
+or 8 virtual processors in your local machine), this parameter needs a higher value.
+A good starting value is 12.  To set it, select Tools from the Visual Studio menu,
+then Options.  Select the ProDG VSI node, then the Build Settings (advanced) node.
+'Maximum number of compile processes to run per project' correpsonds to the -j
+parameter.
